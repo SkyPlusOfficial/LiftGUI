@@ -1,0 +1,45 @@
+---
+version: "1.0"    # Don't change this!
+name: "&l&6LIFTS MENU"
+warps:
+  - index: 10    # Don't use index below 0, above 53 or exactly 49 (reserved for exit button)!
+    item:
+      id: 263
+      meta: 0
+    name: |-    # Mutliline without '\n'
+      &l&eCoal Mine
+
+      &r&3Click to Teleport
+      To Coal Mine
+
+      &r&l&2Click to Teleport
+    title: "&0Coal &7Mine"
+    location: coal
+  - index: 13
+    item:
+      id: 265
+      meta: 0
+    name: |-
+      &l&eIron Mine
+
+      &r&3Click to Teleport
+      To Iron Mine
+
+      &r&l&2Click to Teleport
+    title: "&fIron &7Mine"
+    location: iron
+  - index: 16
+    item:
+      id: 266
+      meta: 0
+    name: |-
+      &l&eGold Mine
+
+      &r&3Click to Teleport
+      To Gold Mine
+
+      &r&l&2Click to Teleport
+    title: "&eGold &7Mine"
+    location: gold
+  # Add more ...
+...

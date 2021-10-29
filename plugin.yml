@@ -1,0 +1,18 @@
+---
+name: LiftGUI
+version: 1.0.0
+description: LiftGUI plugin for SkyPlus Minecraft server
+authors: [SkyPlus, BhawaniSingh]
+api: 4.0.0
+main: SkyPlus\LiftGUI\LiftGUI
+depend: [InvCrashFix]
+
+commands:
+  liftgui:
+    description: Open LiftGUI menu
+    permission: liftgui.open
+
+permissions:
+  liftgui.open:
+    default: true
+...
