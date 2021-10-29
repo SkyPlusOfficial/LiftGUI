@@ -1,0 +1,12 @@
+--- # Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/SkyPlusOfficial/LiftGUI
+build-by-default: true
+branches:
+- main
+projects:
+  LiftGUI:
+    path: ""
+    libs:
+      - src: muqsit/InvMenu/InvMenu
+        version: ^4.3
+        branch: "4.0"
+...
