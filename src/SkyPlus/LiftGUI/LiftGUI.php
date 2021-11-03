@@ -56,11 +56,11 @@ class LiftGUI extends PluginBase {
     public function onCommand(CommandSender $sender, Command $command, string $label, array $args) : bool {
         if ($command->getName() === "liftgui") {
             if (!$sender instanceof Player) {
-                $sender->sendMessage("This command can only be run as player!");
+                $sender->sendMessage(TextFormat::RED . "This command can only be run as player!");
                 return true;
             }
             if (!$sender->hasPermission("liftgui.open")) {
-                $sender->sendMessage("You don't have permission to run this command!");
+                $sender->sendMessage(TextFormat::RED . "You don't have permission to run this command!");
                 return true;
             }
             $this->getConfig()->reload();
