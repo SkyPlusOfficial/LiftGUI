@@ -5,7 +5,6 @@ description: LiftGUI plugin for SkyPlus Minecraft server
 authors: [SkyPlus, BhawaniSingh]
 api: 4.0.0
 main: SkyPlus\LiftGUI\LiftGUI
-depend: [InvCrashFix]
 
 commands:
   liftgui:
