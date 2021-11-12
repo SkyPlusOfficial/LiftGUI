@@ -1,6 +1,10 @@
 ---
 version: "1.0"    # Don't change this!
 name: "&l&6LIFTS MENU"
+# Item ID and meta to use when slot is empty
+empty-slot:
+  id: 95
+  meta: 15
 warps:
   - index: 10    # Don't use index below 0, above 53 or exactly 49 (reserved for exit button)!
     item:

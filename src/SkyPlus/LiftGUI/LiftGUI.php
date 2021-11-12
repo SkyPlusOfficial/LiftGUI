@@ -25,6 +25,8 @@ class LiftGUI extends PluginBase {
     private array $warps;
     private array $indexes;
 
+    private bool $isPlugin = false;
+
     protected function onEnable() : void {
         $this->saveDefaultConfig();
 
@@ -37,6 +39,13 @@ class LiftGUI extends PluginBase {
 
         $this->warps = $this->getConfig()->get("warps");
         $this->indexes = array_column($this->warps, "index");
+
+        // Duplicate index check
+        if (count(array_unique($this->indexes)) !== count($this->indexes)) {
+            $this->getLogger()->error("Duplicate index detected, disabling plugin...");
+            $this->getServer()->getPluginManager()->disablePlugin($this);
+            return;
+        }
 
         // Invalid index check
         $filter = array_filter($this->indexes, function (int $value) : bool {
@@ -74,15 +83,20 @@ class LiftGUI extends PluginBase {
     private function open(Player $player) {
         $inv = InvMenu::create(InvMenuTypeIds::TYPE_DOUBLE_CHEST);
         $inv->setListener(InvMenu::readonly(Closure::fromCallable([$this, "handle"])));
+        $inv->setInventoryCloseListener(function (Player $player) {
+            if (!$this->isPlugin) $player->broadcastSound(new ChestCloseSound());
+        });
         $inv->setName(TextFormat::colorize($this->getConfig()->get("name")));
 
         $contents = $inv->getInventory();
 
+        $emptyId = $this->getConfig()->getNested("empty-slot.id");
+        $emptyMeta = $this->getConfig()->getNested("empty-slot.meta");
         for ($i = 0; $i <= 53; $i++) {
             if (in_array($i, $this->indexes, true) || $i === self::EXIT_INDEX) {
                 continue;
             }
-            $contents->setItem($i, ItemFactory::getInstance()->get(95, 15, 1)->setCustomName("§r"));
+            $contents->setItem($i, ItemFactory::getInstance()->get($emptyId, $emptyMeta, 1)->setCustomName("§r"));
         }
 
         foreach ($this->warps as $warp) {
@@ -104,13 +118,18 @@ class LiftGUI extends PluginBase {
             $location = $this->warps[$arrayKey]["location"];
             $title = TextFormat::colorize($this->warps[$arrayKey]["title"]);
 
+            $this->isPlugin = true;
             $player->removeCurrentWindow();
+            $this->isPlugin = false;
+
             // Activate this when /warp command is available
             //$this->getServer()->dispatchCommand($player, "warp " . $location);
             $player->sendTitle($title);
             $player->broadcastSound(new ChestOpenSound());
         } elseif ($slot === self::EXIT_INDEX) {
+            $this->isPlugin = true;
             $player->removeCurrentWindow();
+            $this->isPlugin = false;
             $player->broadcastSound(new ChestCloseSound());
         }
     }
